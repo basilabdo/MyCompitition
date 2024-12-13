@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مباريات الفرق</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .team-container {
+            display: inline-block;
+            width: 300px;
+            margin: 15px;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            padding: 15px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .team-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+        .team-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .matches {
+            margin-top: 10px;
+            display: none;
+        }
+        .matches p {
+            background-color: #e8f5e9;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 5px;
+            font-size: 16px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>جدول مباريات الفرق</h1>
+    <div id="teams">
+        <!-- سيتم إضافة الفرق هنا بواسطة JavaScript -->
+    </div>
+
+    <script>
+        // قائمة الأسماء
+        const teams = [
+            "مالك", "عاصم", "باسل", "محمد المعتز",
+            "إياس", "عمر آدم", "علي", "محمد أبوبكر",
+            "مبارك", "محمد الحبيب", "محمد عبدالوكيل",
+            "مهند", "ياسر", "أحمد الشفيع"
+        ];
+
+        // قائمة المباريات لكل فريق
+        const matches = {
+            "مالك": ["مباراة ضد علي", "مباراة ضد باسل", "مباراة ضد محمد ابوبكر", "مباراة ضد ياسر"],
+            "عاصم": ["مباراة ضد اياس", "مباراة ضد محمد المعتز", "مباراة ضد احمد الشفيع", "مباراة ضد محمد الحبيب"],
+            "باسل": ["مباراة ضد مالك", "مباراة ضد علي", "مباراة ضد ياسر", "مباراة ضد مبارك"],
+            "محمد المعتز": ["مباراة ضد عمر ادم", "مباراة ضد عاصم ", "مباراة ضد مهند", "مباراة ضد محمد ابوبكر"],
+            "إياس": ["مباراة ضد عاصم", "مباراة ضد عمر ادم", "مباراة ضد  احمد الشفيع", "مباراة ضد محمد الحبيب"],
+            "عمر آدم": ["مباراة ضد محمد عبدالوكيل", "مباراة ضد محمد المعتز", "مباراة ضد اياس", "مباراة ضد مبارك"],
+            "علي": ["مباراة ضد مالك", "مباراة ضد باسل", "مباراة ضد محمد عبدالوكيل", "مباراة ضد مهند"],
+            "محمد أبوبكر": ["مباراة ضد مالك", "مباراة ضد محمد المعتز", "مباراة ضد احمد الشفيع", "مباراة ضد محمد الحبيب"],
+            "مبارك": ["مباراة ضد محمد الحبيب", "مباراة ضد باسل", "مباراة ضد محمد عبدالوكيل", "مباراة ضد عمر ادم"],
+            "محمد الحبيب": ["مباراة ضد مبارك", "مباراة ضد اياس", "مباراة ضد عاصم", "مباراة ضد محمد ابوبكر"],
+            "محمد عبدالوكيل": ["مباراة ضد علي", "مباراة ضد عمر آدم", "مباراة ضد ياسر", "مباراة ضد مبارك"],
+            "مهند": ["مباراة ضد محمد المعتز", "مباراة ضد علي", "مباراة ضد ياسر", "مباراة ضد أحمد الشفيع"],
+            "ياسر": ["مباراة ضد باسل", "مباراة ضد مالك", "مباراة ضد محمد عبدالوكيل", "مباراة ضد مهند"],
+            "أحمد الشفيع": ["مباراة ضد عاصم", "مباراة ضد اياس", "مباراة ضد مهند", "مباراة ضد محمد ابوبكر"]
+        };
+
+        // إضافة الفرق إلى الصفحة
+        const teamsContainer = document.getElementById("teams");
+        teams.forEach(team => {
+            const teamElement = document.createElement("div");
+            teamElement.className = "team-container";
+            teamElement.innerHTML = `<div class="team-name">${team}</div><div class="matches" id="${team.replace(/\s/g, '-')}"></div>`;
+            teamElement.onclick = () => toggleMatches(team, teamElement);
+            teamsContainer.appendChild(teamElement);
+        });
+
+        // عرض/إخفاء المباريات الخاصة بفريق معين
+        function toggleMatches(team, element) {
+            const matchesContainer = element.querySelector(".matches");
+            if (matchesContainer.style.display === "none" || matchesContainer.style.display === "") {
+                matchesContainer.style.display = "block";
+                matchesContainer.innerHTML = matches[team]
+                    .map(match => `<p>${match}</p>`)
+                    .join('');
+            } else {
+                matchesContainer.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
